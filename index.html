@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riset Operai — Beranda</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <nav>
+    <a href="#" class="nav-logo" onclick="showPage('beranda')">Riset Operasi</a>
+    <div class="nav-links">
+      <a href="#" class="active" id="nav-beranda" onclick="showPage('beranda')">Beranda</a>
+      <a href="#" id="nav-profil" onclick="showPage('profil')">Profil</a>
+      <a href="#" id="nav-tugas" onclick="showPage('tugas')">Tugas</a>
+      <div class="owner-badge" id="ownerBadge">
+        <span class="owner-dot"></span>Owner
+      </div>
+      <button class="logout-btn" id="logoutBtn" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="page active" id="beranda">
+    <div class="hero content-wrapper">
+      <p class="hero-eyebrow animate-up delay-1">Selamat Datang</p>
+      <h1 class="hero-title animate-up delay-2">Riset <span> Operasi </span><br>& Tugas Akademik</h1>
+      <p class="hero-sub animate-up delay-3">Platform personal untuk menampilkan profil dan koleksi tugas
+        akademik. Tersedia untuk diakses dan diunduh secara bebas.</p>
+      <div class="hero-actions animate-up delay-4">
+        <button class="btn-primary" onclick="showPage('tugas')">Lihat Tugas</button>
+        <button class="btn-ghost" onclick="showPage('profil')">Tentang Saya</button>
+      </div>
+
+      <div class="owner-login-section animate-up delay-5">
+        <p class="login-hint">Owner Area</p>
+        <button class="btn-ghost small-btn" onclick="openLogin()">Login Akses</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="profil">
+    <div class="content-wrapper">
+      <div class="profil-header animate-up delay-1">
+        <div class="profil-photo">👤</div>
+        <div class="profil-info">
+          <span class="profil-badge">Mahasiswa Aktif</span>
+          <h1 class="profil-name">Muhamad<br>Abiyyu Furqan</h1>
+          <p class="profil-desc">Mahasiswa jurusan Informatika yang bersemangat dalam pengembangan web dan riset
+            teknologi. Berkomitmen menghasilkan karya yang inovatif.</p>
+          <div class="profil-stats">
+            <div class="stat-item">
+              <span class="stat-num" id="statTugas">0</span>
+              <span class="stat-label">Tugas</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">2+</span>
+              <span class="stat-label">Tahun Belajar</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">Ss+</span>
+              <span class="stat-label">Target IPK</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profil-section animate-up delay-2">
+        <h2 class="section-title">Universitas Perjuangan</h2>
+        <div class="skill-grid">
+          <span class="skill-tag">Fakultas Teknik</span>
+          <span class="skill-tag">Prodi Teknik informatika</span>
+          <span class="skill-tag">Angkatan 2024</span>
+          <span class="skill-tag">Kelas C</span>
+          <span class="skill-tag">NIM 2403010064</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="tugas">
+    <div class="content-wrapper">
+      <div class="tugas-header animate-up delay-1">
+        <div>
+          <h1 class="tugas-title">Koleksi <span>Tugas</span></h1>
+          <p class="tugas-subtitle">Tersedia untuk diunduh dan dipelajari</p>
+        </div>
+        <button class="btn-primary" id="uploadToggleBtn" style="display:none;" onclick="toggleUploadPanel()">+ Upload
+          Baru</button>
+      </div>
+
+      <div class="upload-panel" id="uploadPanel">
+        <h3>Upload Tugas Baru</h3>
+        <div class="upload-panel" id="uploadPanel">
+          <h3>Tambah Tugas (Via Link)</h3>
+          <div class="upload-form">
+            <input type="text" id="uploadTitle" placeholder="Judul tugas..." />
+            <div class="form-row">
+              <select id="uploadCategory">
+                <option value="">Pilih Kategori</option>
+                <option value="tugas">Tugas</option>
+                <option value="uts">UTS</option>
+                <option value="uas">UAS</option>
+                <option value="laporan">Laporan</option>
+              </select>
+              <input type="text" id="uploadSubject" placeholder="Mata kuliah..." />
+            </div>
+            <textarea id="uploadDesc" placeholder="Deskripsi tugas singkat..."></textarea>
+
+            <input type="url" id="uploadLink" placeholder="Tempel Link Google Drive di sini..." />
+
+            <button class="btn-primary btn-full" onclick="submitUpload()">Simpan Tugas</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tugas-filter animate-up delay-2">
+        <button class="filter-btn active" onclick="filterTugas('semua', this)">Semua</button>
+        <button class="filter-btn" onclick="filterTugas('tugas', this)">Tugas</button>
+        <button class="filter-btn" onclick="filterTugas('uts', this)">UTS</button>
+        <button class="filter-btn" onclick="filterTugas('uas', this)">UAS</button>
+        <button class="filter-btn" onclick="filterTugas('laporan', this)">Laporan</button>
+      </div>
+
+      <div class="tugas-grid animate-up delay-3" id="tugasGrid"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeLogin()">✕</button>
+      <h2 class="modal-title">Owner Login</h2>
+      <p class="modal-sub">Masukkan kredensial untuk mengakses panel admin.</p>
+      <p class="login-error" id="loginError">Username atau password salah.</p>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="loginUser" placeholder="Masukkan username" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="Masukkan password" />
+      </div>
+      <button class="btn-primary btn-full" onclick="doLogin()">Masuk</button>
+    </div>
+  </div>
+
+  <div class="viewer-modal" id="viewerModal">
+    <div class="viewer-content">
+      <div class="viewer-header">
+        <h3 id="viewerTitle"></h3>
+        <button class="modal-close" onclick="closeViewer()">✕</button>
+      </div>
+      <div class="viewer-body" id="viewerBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
